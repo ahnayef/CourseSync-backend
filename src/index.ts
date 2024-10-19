@@ -3,8 +3,6 @@ import cors from 'cors';
 import { connectToDatabase } from './utils/db.util';
 import { router } from './routes/routes';
 
-require('dotenv').config();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,6 +15,7 @@ app.use(cors({
     origin: clientOrigin, //Only our client
     credentials: true,
 }));
+
 
 
 const startServer = async () => {
