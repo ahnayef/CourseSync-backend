@@ -1,7 +1,54 @@
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    sid VARCHAR(16) UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
+    session VARCHAR(10),
+    role ENUM('teacher', 'student', 'cr') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS courses (
+    code VARCHAR(12) UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
+    session VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS notices (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    course_code VARCHAR(12),
+    department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
+    session VARCHAR(10) NOT NULL,
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (course_code) REFERENCES courses(code) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL,
+    asked_by INT,
+    course_code VARCHAR(12),
+    department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
+    session VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (asked_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (course_code) REFERENCES courses(code) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS answers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL,
+    question_id INT,
+    answered_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (answered_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

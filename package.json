@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "dev": "nodemon",
-    "reset": "pnpm ts-node src/scripts/reset.ts"
+    "reset": "pnpm tsx src/scripts/reset.ts"
   },
   "author": "AHNayef",
   "license": "ISC",

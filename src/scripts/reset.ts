@@ -15,7 +15,15 @@ const resetDB = async () => {
         await connection.query(dropSQL);
         console.log('Deleted...');
 
-        await connection.query(createSQL);
+        const createStatement = createSQL.split(';'); // Had to split the SQL statements because the query method doesn't support multiple statements :/
+
+        for (const statement of createStatement) {
+            if (statement.trim() === '') {
+                continue;
+            }
+            await connection.query(statement);
+        }
+
         console.log('DB setted up!');
     } catch (error) {
         console.error('Error while resetting the DB:', error);
