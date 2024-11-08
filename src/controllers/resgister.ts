@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import Joi from "joi";
 import { connectToDatabase } from "../utils/db.util";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+require('dotenv').config();
 
 
 const schema = Joi.object({
@@ -28,6 +31,13 @@ const schema = Joi.object({
 const Register = async (req: Request, res: any) => {
     try {
         const db = await connectToDatabase();
+
+        const secretKey = process.env.JWT_SECRET_KEY;
+
+        if (!secretKey) {
+            return res.status(500).send('JWT secret key is not defined');
+        }
+
         const { error, value } = schema.validate(req.body);
 
         if (error) {
@@ -51,8 +61,22 @@ const Register = async (req: Request, res: any) => {
 
             const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result.insertId]);
 
-            console.log(user);
-            return res.status(201).send(user[0]);
+            const token = jwt.sign(
+                { id: user[0].id, role: user[0].role, email: user[0].email },
+                secretKey,
+                { expiresIn: '1h' }
+            );
+
+            return res.status(200).json({
+                data: {
+                    token, user: {
+                        name: user[0].name,
+                        email: user[0].email,
+                        role: user[0].role,
+                        department: user[0].department
+                    }
+                }
+            });
 
         } else {
             const [rows]: any = await db.query("SELECT sid FROM users WHERE sid = ?", [sid]);
@@ -68,9 +92,24 @@ const Register = async (req: Request, res: any) => {
 
             const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result.insertId]);
 
-            console.log(user);
-            return res.status(201).send(user[0]);
 
+            const token = jwt.sign(
+                { id: user[0].id, role: user[0].role, sid: user[0].sid },
+                secretKey,
+                { expiresIn: '1h' }
+            );
+
+            return res.status(200).json({
+                data: {
+                    token, user: {
+                        name: user[0].name,
+                        sid: user[0].sid,
+                        role: user[0].role,
+                        department: user[0].department,
+                        session: user[0].session
+                    }
+                }
+            });
         }
 
     } catch (error) {
