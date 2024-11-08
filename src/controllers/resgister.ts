@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import Joi from "joi";
 import { connectToDatabase } from "../utils/db.util";
+import bcrypt from 'bcrypt';
 
 
 const schema = Joi.object({
     role: Joi.string().valid("Teacher", "Student", "CR").required(),
-    sid: Joi.string().pattern(/^056\d{13}$/).required().messages({
+    sid: Joi.string().allow(null).pattern(/^056\d{13}$/).required().messages({
         'string.pattern.base': 'ID must be 16 digits starting with 056',
     }),
     name: Joi.string().min(5).required(),
@@ -34,35 +35,48 @@ const Register = async (req: Request, res: any) => {
         }
         const { role, sid, name, email, password, department, session } = value;
 
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         if (role == "Teacher") {
-            // TODO:Check if teacher exists
-            // If teacher exists, return error
-            // If teacher does not exist, create teacher
+            const [rows]: any = await db.query("SELECT email FROM users WHERE email = ?", [email]);
 
-            const exist = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-
-            if (exist) {
+            if (rows.length > 0) {
                 return res.status(400).send("User already exists");
             }
 
-            
+            const result: any = await db.query(
+                "INSERT INTO users (role, name, email, password, department) VALUES (?, ?, ?, ?, ?)",
+                [role, name, email, hashedPassword, department]
+            );
 
-            const user = await db.query("INSERT INTO users (role, name, email, password, department) VALUES (?, ?, ?, ?, ?, ?, ?)", [role, name, email, password, department]);
-            
+            const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result.insertId]);
+
+            console.log(user);
+            return res.status(201).send(user[0]);
 
         } else {
-            //TODO: Check if exists
-            // If exists, return error
-            // If does not exist, create account
+            const [rows]: any = await db.query("SELECT sid FROM users WHERE sid = ?", [sid]);
+
+            if (rows.length > 0) {
+                return res.status(400).send("User already exists");
+            }
+
+            const result: any = await db.query(
+                "INSERT INTO users (role, sid, name, password, department, session) VALUES (?, ?, ?, ?, ?, ?)",
+                [role, sid, name, hashedPassword, department, session]
+            );
+
+            const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result.insertId]);
+
+            console.log(user);
+            return res.status(201).send(user[0]);
+
         }
 
-
     } catch (error) {
-        console.log(error);
-        return res.status(500).send("Internal server error");
+        return res.status(500).send("Internal Server Error");
     }
-}
+};
 
 
 export default Register;
