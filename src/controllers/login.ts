@@ -16,6 +16,7 @@ const Login = async (req: any, res: any) => {
                 res.status(404).send('User not found');
             } else {
                 res.status(200).send('User found');
+                // TODO: Add the logic for the teacher login
             }
         } // TODO: Add the logic for the student and CR login
     } catch (err) {

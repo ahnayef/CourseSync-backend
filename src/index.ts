@@ -4,7 +4,7 @@ import { connectToDatabase } from './utils/db.util';
 import { router } from './routes/routes';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT || '3000', 10);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,8 +25,8 @@ const startServer = async () => {
 
         app.use('/api', router);
 
-        app.listen(PORT, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`Server is running on http://localhost:${PORT} and on the LAN.`);
         });
     } catch (error) {
         console.error('Error connecting to the database:', error);
