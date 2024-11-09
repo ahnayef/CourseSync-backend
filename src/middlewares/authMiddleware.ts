@@ -1,7 +1,7 @@
-import { NextFunction, Request } from "express";
+import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (req: Request, res: any, next: NextFunction) => {
+const authMiddleware = (req: any, res: any, next: NextFunction) => {
 
     const secretKey = process.env.JWT_SECRET_KEY;
 
@@ -10,17 +10,21 @@ const authMiddleware = (req: Request, res: any, next: NextFunction) => {
     }
 
     const token = req.header('Authorization');
+    const parsedToken = token?.split(' ')[1];
 
     if (!token) {
         return res.status(401).send('Access denied. No token provided');
     }
 
     try {
-        const decoded = jwt.verify(token, secretKey);
-        // TODO: Complete the implementation 
+        const user = jwt.verify(parsedToken, secretKey);
+        req.user = user;
         next();
     } catch (error) {
+        console.log(error);
         res.status(400).send('Invalid token');
     }
 
-}   
+}
+
+export default authMiddleware;
