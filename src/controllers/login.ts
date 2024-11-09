@@ -20,7 +20,7 @@ const Login = async (req: any, res: any) => {
         const secretKey = process.env.JWT_SECRET_KEY;
 
         if (!secretKey) {
-            return res.status(500).send('JWT secret key is not defined');
+            return res.status(500).send('JWT secret key is not defined. Check environment variables');
         }
 
         const { error, value } = schema.validate(req.body);
