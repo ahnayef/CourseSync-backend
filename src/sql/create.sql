@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS courses (
     code VARCHAR(12) UNIQUE NOT NULL,
     name VARCHAR(200) NOT NULL,
+    description TEXT,
     department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
     session VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
