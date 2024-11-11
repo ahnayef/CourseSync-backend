@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { connectToDatabase } from "../utils/db.util";
+import { connectToDatabase } from "../../utils/db.util";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 

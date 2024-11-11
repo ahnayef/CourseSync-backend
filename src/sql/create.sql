@@ -16,8 +16,11 @@ CREATE TABLE IF NOT EXISTS courses (
     description TEXT,
     department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
     session VARCHAR(10) NOT NULL,
+    credit INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
 
 CREATE TABLE IF NOT EXISTS notices (
     id INT AUTO_INCREMENT PRIMARY KEY,
