@@ -26,7 +26,7 @@ const createCourse = async (req: any, res: any) => {
 
         const { name, code, description, department, session, credit } = value;
 
-        const [rows]: any = await db.query("SELECT * FROM courses WHERE code = ?", [code]);
+        const [rows]: any = await db.query("SELECT * FROM courses WHERE code = ? AND session = ?", [code, session]);
 
         if (rows.length) {
             return res.status(409).send("Course already exists");
@@ -40,9 +40,7 @@ const createCourse = async (req: any, res: any) => {
         const [course]: any = await db.query("SELECT * FROM courses WHERE id = ?", [result.insertId]);
 
         console.log(course);
-        return res.json({
-            data: course[0]
-        });
+        return res.status(201).send("Course Created Successfully")
 
     } catch (error: any) {
         return res.status(500).send(error.message);
