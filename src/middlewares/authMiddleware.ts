@@ -22,7 +22,7 @@ const authMiddleware = (req: any, res: any, next: NextFunction) => {
         next();
     } catch (error) {
         console.log(error);
-        res.status(400).send('Invalid token');
+        res.status(400).send('Your token is expired or invalid, please login again');
     }
 
 }

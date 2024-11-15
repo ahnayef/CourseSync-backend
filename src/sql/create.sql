@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS courses (
     department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
     session VARCHAR(10) NOT NULL,
     credit INT NOT NULL,
-    insttructor VARCHAR(100) NOT NULL,
+    instructor INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (insttructor) REFERENCES users(email) ON DELETE
+    FOREIGN KEY (instructor) REFERENCES users(id) ON DELETE
     CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE IF NOT EXISTS enroll (
