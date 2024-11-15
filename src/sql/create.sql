@@ -33,13 +33,10 @@ CREATE TABLE IF NOT EXISTS notices (
     title VARCHAR(200) NOT NULL,
     content TEXT NOT NULL,
     course_id INT,
-    department ENUM('CSE', 'BBA', 'ENG', 'LAW') NOT NULL,
-    session VARCHAR(10) NOT NULL,
-    created_by INT,
+    session VARCHAR(10),
+    department ENUM('CSE', 'BBA', 'ENG', 'LAW'),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE
-    SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE IF NOT EXISTS questions (
     id INT AUTO_INCREMENT PRIMARY KEY,

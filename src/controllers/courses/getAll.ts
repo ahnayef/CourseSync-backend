@@ -5,8 +5,6 @@ const getAllCourses = async (req: any, res: any) => {
         const db = await connectToDatabase();
 
         const [rows]: any = await db.query("SELECT * FROM courses");
-
-        console.log(rows);
         return res.json({
             data: rows
         });
