@@ -40,9 +40,11 @@ const createCourse = async (req: any, res: any) => {
             [name, code, credit, department, session, id]
         )
 
-        const [course]: any = await db.query("SELECT * FROM courses WHERE id = ?", [result.insertId]);
+        const [course]: any = await db.query("SELECT * FROM courses WHERE id = ?", [result[0].insertId]);
 
-        console.log(course);
+        if (!course.length) {
+            return res.status(500).send("Could not create course");
+        }
         return res.status(201).send("Course Created Successfully")
 
     } catch (error: any) {
