@@ -59,8 +59,7 @@ const Register = async (req: Request, res: any) => {
                 [role, name, email, hashedPassword, department]
             );
 
-            const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result.insertId]);
-
+            const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result[0].insertId]);
             const token = jwt.sign(
                 { id: user[0].id, role: user[0].role, email: user[0].email },
                 secretKey,
@@ -90,8 +89,7 @@ const Register = async (req: Request, res: any) => {
                 [role, sid, name, hashedPassword, department, session]
             );
 
-            const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result.insertId]);
-
+            const [user]: any = await db.query("SELECT * FROM users WHERE id = ?", [result[0].insertId]);
 
             const token = jwt.sign(
                 { id: user[0].id, role: user[0].role, sid: user[0].sid },
@@ -113,6 +111,7 @@ const Register = async (req: Request, res: any) => {
         }
 
     } catch (error) {
+        console.log(error);
         return res.status(500).send("Internal Server Error");
     }
 };
