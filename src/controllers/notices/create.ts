@@ -14,7 +14,7 @@ const createNotice = async (req: any, res: any) => {
         const { error, value } = schema.validate(req.body);
         const { id, role } = req.user;
 
-        if (role !== "cr") {
+        if (role !== "cr" && role !== "teacher") {
             return res.status(403).send("You are not authorized to create a notice");
         }
 
