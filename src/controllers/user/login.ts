@@ -49,7 +49,7 @@ const Login = async (req: any, res: any) => {
                 const passwordMatch = await bcrypt.compare(password, user[0].password);
 
                 if (!passwordMatch) {
-                    return res.status(401).send('Password does not match');
+                    return res.status(401).send('Wrong password');
                 }
 
                 const token = jwt.sign(
