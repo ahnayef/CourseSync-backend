@@ -2,16 +2,17 @@ import { connectToDatabase } from "../../utils/db.util";
 
 const getNotice = async (req: any, res: any) => {
 
-    const { identification } = req.params;
+    const { session, dept, courseId } = req.query
 
-    const session = identification.split('+')[0];
-    const dept = identification.split('+')[1];
 
     try {
 
         const db = await connectToDatabase();
 
-        const [rows]: any = await db.query("SELECT * FROM notices WHERE department = ?  AND session = ? ORDER BY created_at DESC", [dept, session]);
+
+        const query = courseId ? "SELECT * FROM notices WHERE course_id = ? ORDER BY created_at DESC" : "SELECT * FROM notices WHERE department = ?  AND session = ? AND course_id IS NULL ORDER BY created_at DESC";
+
+        const [rows]: any = await db.query(query, courseId ? [courseId] : [dept, session]);
 
         if (!rows.length) {
             return res.status(404).send("No notices yet!");

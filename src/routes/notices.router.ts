@@ -6,7 +6,7 @@ import getNotice from "../controllers/notices/get";
 const NoticesRouter = Router();
 
 NoticesRouter.post('/create', createNotice);
-NoticesRouter.get('/get/:identification', getNotice);
+NoticesRouter.get('/get', getNotice);
 
 
 
