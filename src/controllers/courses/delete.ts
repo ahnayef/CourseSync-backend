@@ -5,7 +5,7 @@ const deleteCourse = async (req: any, res: any) => {
 
         const { role } = req.user;
 
-        if (role !== "cr" || role !== "teacher") {
+        if (role !== "cr" && role !== "teacher") {
             return res.status(403).send("You are not authorized to perform this action");
         }
 
