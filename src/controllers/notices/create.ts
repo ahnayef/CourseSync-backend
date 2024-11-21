@@ -4,6 +4,7 @@ import { connectToDatabase } from "../../utils/db.util";
 const schema = Joi.object({
     title: Joi.string().required(),
     content: Joi.string().required(),
+    courseId: Joi.string().allow(null).optional()
 })
 
 const createNotice = async (req: any, res: any) => {
@@ -26,11 +27,13 @@ const createNotice = async (req: any, res: any) => {
 
         const [user]: any = await db.query("SELECT session, department FROM users WHERE id = ?", [id]);
 
-        const { title, content } = value;
+        const { title, content, courseId } = value;
+
+        console.log(title, courseId);
 
         const result: any = await db.query(
-            "INSERT INTO notices (title, content, session, department) VALUES (?, ?, ?, ?)",
-            [title, content, user[0].session, user[0].department]
+            "INSERT INTO notices (title, content, session, department, course_id) VALUES (?, ?, ?, ?, ?)",
+            [title, content, user[0].session, user[0].department, courseId]
         )
 
 
