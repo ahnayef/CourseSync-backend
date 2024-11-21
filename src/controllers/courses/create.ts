@@ -4,10 +4,14 @@ import { connectToDatabase } from "../../utils/db.util";
 
 const schema = Joi.object({
     name: Joi.string().required(),
-    code: Joi.string().required(),
-    credit: Joi.string().required(),
-    department: Joi.string().valid("CSE", "EEE", "BBA", "ENG").required(),
-    session: Joi.string().allow(null).optional(),
+    code: Joi.string().regex(/^[A-Z]{3}-\d{3,8}$/).required().messages({
+        'string.pattern.base': 'Course Code must be in format of AAA-12345678',
+    }),
+    credit: Joi.string().valid("3","1.5").required(),
+    department: Joi.string().valid("CSE", "BBA", "English", "LLB").required(),
+    session: Joi.string().allow(null).pattern(/^(Spring|Summer|Fall) \d{2}$/).optional().messages({
+        'string.pattern.base': 'Session must be in format of (Spring|Summer|Fall) YY',
+    }),
 })
 
 const createCourse = async (req: any, res: any) => {
