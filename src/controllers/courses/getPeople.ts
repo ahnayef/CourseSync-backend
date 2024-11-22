@@ -14,7 +14,7 @@ const getPeople = async (req: any, res: any) => {
 
         const [instructors]: any = await db.query("SELECT name from users where id = ?", [course[0].instructor]);
 
-        const [students]: any = await db.query("SELECT users.id, users.name from users INNER JOIN enroll ON users.id = enroll.student_id WHERE enroll.course_id = ?", [course[0].id]);
+        const [students]: any = await db.query("SELECT users.id, users.name, users.sid from users INNER JOIN enroll ON users.id = enroll.student_id WHERE enroll.course_id = ?", [course[0].id]);
 
         return res.json({
             data: {
