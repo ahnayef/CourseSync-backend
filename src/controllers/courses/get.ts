@@ -13,8 +13,7 @@ const get = async (req: any, res: any) => {
                 data: rows
             });
         } else {
-            const [rows]: any = await db.query("SELECT * FROM courses INNER JOIN enroll ON courses.id = enroll.course_id WHERE enroll.student_id = ?", [user.id]);
-
+            const [rows]: any = await db.query("SELECT courses.* FROM courses INNER JOIN enroll ON courses.id = enroll.course_id WHERE enroll.student_id = ?", [user.id]);
             return res.json({
                 data: rows
             });
