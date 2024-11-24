@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 const schema = Joi.object({
-    role: Joi.string().valid("Teacher", "Student", "CR").required(),
+    role: Joi.string().valid("Teacher", "Student", "Admin/HOD").required(),
     identification: Joi.string().required(),
     password: Joi.string().required()
 })
