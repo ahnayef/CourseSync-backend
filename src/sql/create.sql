@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
     session VARCHAR(10),
-    role ENUM('teacher', 'student', 'cr') NOT NULL,
+    role ENUM('teacher', 'student', 'cr', 'hod', 'admin') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS courses (
