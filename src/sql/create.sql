@@ -59,3 +59,19 @@ CREATE TABLE IF NOT EXISTS answers (
     FOREIGN KEY (answered_by) REFERENCES users(id) ON DELETE
     SET NULL ON UPDATE CASCADE
 );
+INSERT INTO users(name, email, password, department, role)
+VALUES(
+        'Dept Head',
+        'cse-hod@neub.edu.bd',
+        '$2b$10$alY3bw9vbMoucKv4vuPmvOevHHSUOtYgZ3hEahPwxQjHNsOPcfTUW',
+        'CSE',
+        'hod'
+    );
+    
+INSERT INTO users(name, email, password, role)
+VALUES(
+        'Admin',
+        'admin@neub.edu.bd',
+        '$2b$10$alY3bw9vbMoucKv4vuPmvOevHHSUOtYgZ3hEahPwxQjHNsOPcfTUW',
+        'admin'
+    );
