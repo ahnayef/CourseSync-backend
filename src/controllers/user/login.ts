@@ -93,7 +93,7 @@ const Login = async (req: any, res: any) => {
                 const token = jwt.sign(
                     { id: user[0].id, role: user[0].role, email: user[0].email },
                     secretKey,
-                    { expiresIn: '1h' }
+                    { expiresIn: '1d' }
                 );
 
                 return res.status(200).json({
