@@ -6,6 +6,7 @@ import hodGet from "../controllers/user/hodGet";
 import getOne from "../controllers/user/getOne";
 import updateRole from "../controllers/user/updateRole";
 import toggleBan from "../controllers/user/toggleBan";
+import resetPass from "../controllers/user/resetPass";
 
 const UsersRouter = Router();
 
@@ -22,5 +23,7 @@ UsersRouter.get('/getOne/:id', authMiddleware, getOne)
 UsersRouter.put('/updateRole', authMiddleware, updateRole)
 
 UsersRouter.put('/toggleBan/', authMiddleware, toggleBan)
+
+UsersRouter.get('/resetPass/:id', authMiddleware, resetPass)
 
 export { UsersRouter };
