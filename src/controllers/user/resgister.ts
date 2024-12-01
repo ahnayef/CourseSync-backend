@@ -106,7 +106,8 @@ const Register = async (req: Request, res: any) => {
                         sid: user[0].sid,
                         role: user[0].role,
                         department: user[0].department,
-                        session: user[0].session
+                        session: user[0].session,
+                        disabled: user[0].disabled
                     }
                 }
             });

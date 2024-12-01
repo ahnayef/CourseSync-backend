@@ -100,9 +100,11 @@ const Login = async (req: any, res: any) => {
                     data: {
                         token, user: {
                             name: user[0].name,
-                            email: user[0].email,
+                            sid: user[0].sid,
                             role: user[0].role,
-                            department: user[0].department
+                            department: user[0].department,
+                            session: user[0].session,
+                            disabled: user[0].disabled
                         }
                     }
                 });
