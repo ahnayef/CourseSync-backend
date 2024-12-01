@@ -7,7 +7,7 @@ const getOne = async (req: any, res: any) => {
         const db = await connectToDatabase();
 
         const [user]: any = await db.query(
-            `SELECT name, sid, session, role FROM users WHERE id = ?`,
+            `SELECT name, sid, session, role, disabled FROM users WHERE id = ?`,
             [id]
         );
 
