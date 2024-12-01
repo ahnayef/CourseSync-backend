@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
     session VARCHAR(10),
     role ENUM('teacher', 'student', 'cr', 'hod', 'admin') NOT NULL,
+    disabled BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS courses (
