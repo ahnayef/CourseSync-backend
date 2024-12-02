@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS schedules (
     id INT AUTO_INCREMENT PRIMARY KEY,
     course_id INT,
     teacher_id INT,
-    day ENUM('Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday') NOT NULL,
+    day ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday') NOT NULL,
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
