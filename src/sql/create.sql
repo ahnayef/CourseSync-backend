@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS schedules (
     teacher_id INT,
     day ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday') NOT NULL,
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
+    session VARCHAR(10),
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     room VARCHAR(10) NOT NULL,
