@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS answers,
 questions,
+schedules,
 notices,
 enroll,
 courses,
