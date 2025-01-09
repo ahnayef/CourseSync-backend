@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS courses (
     code VARCHAR(12) UNIQUE NOT NULL,
     name VARCHAR(200) NOT NULL,
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
-    session VARCHAR(10) NOT NULL,
     credit INT NOT NULL,
     instructor INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
