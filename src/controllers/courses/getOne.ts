@@ -3,7 +3,7 @@ import { connectToDatabase } from "../../utils/db.util";
 const getOne = async (req: any, res: any) => {
 
     const { id } = req.params;
-
+    console.log(id);
     try {
         const db = await connectToDatabase();
 
@@ -12,7 +12,7 @@ const getOne = async (req: any, res: any) => {
         if (!rows.length) {
             return res.status(404).send("Course not found");
         }
-
+        console.log(rows[0]);
         return res.json({
             data: rows[0]
         });

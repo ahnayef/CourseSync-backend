@@ -6,11 +6,14 @@ import getOne from "../controllers/courses/getOne";
 import addStudent from "../controllers/courses/addStudent";
 import getPeople from "../controllers/courses/getPeople";
 import removeStudent from "../controllers/courses/removeStudent";
+import hodGet from "../controllers/courses/hodGet";
 
 const CoursesRouter = Router();
 
 
 CoursesRouter.get('/get', get);
+
+CoursesRouter.get('/hodGet', hodGet);
 
 CoursesRouter.get('/get/:id', getOne);
 

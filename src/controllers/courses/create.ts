@@ -9,9 +9,6 @@ const schema = Joi.object({
     }),
     credit: Joi.string().valid("3","1.5").required(),
     department: Joi.string().valid("CSE", "BBA", "English", "LLB").required(),
-    session: Joi.string().allow(null).pattern(/^(Spring|Summer|Fall) \d{2}$/).optional().messages({
-        'string.pattern.base': 'Session must be in format of (Spring|Summer|Fall) YY',
-    }),
 })
 
 const createCourse = async (req: any, res: any) => {
@@ -19,7 +16,7 @@ const createCourse = async (req: any, res: any) => {
 
         const { id, role } = req.user;
 
-        if (role !== "teacher") {
+        if (role !== "hod") {
             return res.status(403).send("You are not authorized to create a course");
         }
 
@@ -31,21 +28,20 @@ const createCourse = async (req: any, res: any) => {
             return res.status(400).send(error.message);
         }
 
-        const { name, code, credit, department, session } = value;
+        const { name, code, credit, department } = value;
 
-        const [rows]: any = await db.query("SELECT * FROM courses WHERE code = ? AND session = ?", [code, session]);
+        const [rows]: any = await db.query("SELECT * FROM courses WHERE code = ?", [code]);
 
         if (rows.length) {
             return res.status(409).send("Course already exists");
         }
 
         const result: any = await db.query(
-            "INSERT INTO courses (name, code, credit, department, session,instructor) VALUES (?, ?, ?, ?, ?, ?)",
-            [name, code, credit, department, session, id]
+            "INSERT INTO courses (name, code, credit, department,instructor) VALUES (?, ?, ?, ?, ?)",
+            [name, code, credit, department,  id]
         )
 
         const [course]: any = await db.query("SELECT * FROM courses WHERE id = ?", [result[0].insertId]);
-
         if (!course.length) {
             return res.status(500).send("Could not create course");
         }
