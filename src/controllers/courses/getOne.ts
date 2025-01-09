@@ -6,7 +6,7 @@ const getOne = async (req: any, res: any) => {
     try {
         const db = await connectToDatabase();
 
-        const [rows]: any = await db.query("SELECT * FROM courses WHERE id = ?", [id]);
+        const [rows]: any = await db.query("SELECT id, name, code, department, credit, instructor FROM courses WHERE id = ?", [id]);
 
         if (!rows.length) {
             return res.status(404).send("Course not found");

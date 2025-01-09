@@ -7,6 +7,7 @@ import addStudent from "../controllers/courses/addStudent";
 import getPeople from "../controllers/courses/getPeople";
 import removeStudent from "../controllers/courses/removeStudent";
 import hodGet from "../controllers/courses/hodGet";
+import updateCourse from "../controllers/courses/update";
 
 const CoursesRouter = Router();
 
@@ -26,6 +27,8 @@ CoursesRouter.post('/addStudent', addStudent);
 CoursesRouter.delete('/removeStudent', removeStudent);
 
 CoursesRouter.get('/getPeople/:id', getPeople);
+
+CoursesRouter.put('/update', updateCourse);
 
 
 

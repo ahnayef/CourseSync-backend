@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS courses (
     code VARCHAR(12) UNIQUE NOT NULL,
     name VARCHAR(200) NOT NULL,
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
-    credit INT NOT NULL,
+    credit VARCHAR(3) NOT NULL,
     instructor INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (instructor) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
