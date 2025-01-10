@@ -8,6 +8,7 @@ import getPeople from "../controllers/courses/getPeople";
 import removeStudent from "../controllers/courses/removeStudent";
 import hodGet from "../controllers/courses/hodGet";
 import updateCourse from "../controllers/courses/update";
+import getAll from "../controllers/courses/getAll";
 
 const CoursesRouter = Router();
 
@@ -15,6 +16,8 @@ const CoursesRouter = Router();
 CoursesRouter.get('/get', get);
 
 CoursesRouter.get('/hodGet', hodGet);
+
+CoursesRouter.get('/getAll', getAll);
 
 CoursesRouter.get('/get/:id', getOne);
 

@@ -3,8 +3,6 @@ import { connectToDatabase } from "../../utils/db.util";
 const getTeachers = async (req: any, res: any) => {
 
     const { user } = req;
-    const { dept } = req.params;
-
     try {
 
         if (user.role !== 'hod') {
@@ -13,7 +11,7 @@ const getTeachers = async (req: any, res: any) => {
 
         const db = await connectToDatabase();
 
-        const [rows]: any = await db.query("SELECT id, name FROM users WHERE department = ? AND role = 'teacher'", [dept]);
+        const [rows]: any = await db.query("SELECT id, name FROM users WHERE role = 'teacher'");
 
         if (!rows.length) {
             return res.status(404).send("No teachers found!");
