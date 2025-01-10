@@ -9,6 +9,7 @@ const schema = Joi.object({
     course: Joi.number().required(),
     instructor: Joi.number().required(),
     room: Joi.string().pattern(/^R-\d{3}$/).required().messages({ 'string.pattern.base': 'Room must be in the format of R-XXX' }),
+    department: Joi.string().valid("CSE", "BBA", "English", "LLB").required(),
 })
 
 

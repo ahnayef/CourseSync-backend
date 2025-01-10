@@ -27,6 +27,6 @@ UsersRouter.put('/toggleBan/', authMiddleware, toggleBan)
 
 UsersRouter.get('/resetPass/:id', authMiddleware, resetPass)
 
-UsersRouter.get('/getTeachers/:dept', authMiddleware, getTeachers)
+UsersRouter.get('/getTeachers/', authMiddleware, getTeachers)
 
 export { UsersRouter };
