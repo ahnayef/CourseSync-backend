@@ -8,7 +8,11 @@ const get = async (req: any, res: any) => {
         const db = await connectToDatabase();
 
         if (user.role === 'teacher') {
-            const [rows]: any = await db.query("SELECT * FROM courses WHERE instructor= ?", [user.id]);
+            const [rows]: any = await db.query(`
+                SELECT courses.*, 
+                (SELECT COUNT(*) FROM enroll WHERE enroll.course_id = courses.id) as studentCount 
+                FROM courses 
+                WHERE instructor = ?`, [user.id]);
             return res.json({
                 data: rows
             });
