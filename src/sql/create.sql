@@ -40,16 +40,16 @@ CREATE TABLE IF NOT EXISTS notices (
 
 CREATE TABLE IF NOT EXISTS schedules (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id INT,
-    teacher_id INT,
+    course INT,
+    instructor INT,
     day ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday') NOT NULL,
     department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
     session VARCHAR(10),
-    start_time TIME NOT NULL,
-    end_time TIME NOT NULL,
+    start TIME NOT NULL,
+    end TIME NOT NULL,
     room VARCHAR(10) NOT NULL,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (course) REFERENCES courses(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (instructor) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS questions (
