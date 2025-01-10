@@ -25,9 +25,7 @@ const schema = Joi.object({
             'string.pattern.base': 'Password must be 8+ charecter with upper, lower, number, and special charecter',
         }),
     department: Joi.string().valid("CSE", "BBA", "English", "LLB").required(),
-    session: Joi.string().allow(null).pattern(/^(Spring|Summer|Fall) \d{2}$/).optional().messages({
-        'string.pattern.base': 'Session must be in format of (Spring|Summer|Fall) YY',
-    }),
+    session: Joi.string().allow(null).pattern(/^(Spring|Summer|Fall) \d{2}$/).optional().messages({'string.pattern.base': 'Session must be in format of (Spring|Summer|Fall) YY'}),
 })
 
 const Register = async (req: Request, res: any) => {
