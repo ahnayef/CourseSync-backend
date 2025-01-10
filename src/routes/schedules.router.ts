@@ -1,12 +1,12 @@
 import { Router } from "express";
-import createNotice from "../controllers/notices/create";
-import getNotice from "../controllers/notices/get";
-import deleteNotice from "../controllers/notices/delete";
+
 import createSchedule from "../controllers/schedules/create";
+import getSchedule from "../controllers/schedules/get";
 
 
 const SchedulesRouter = Router();
 
+SchedulesRouter.get('/get', getSchedule);
 SchedulesRouter.post('/create', createSchedule);
 
 
