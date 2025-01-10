@@ -42,7 +42,9 @@ const getSchedule = async (req: any, res: any) => {
                 return res.status(404).send("No schedules found");
             }
 
-            return res.status(200).send(rows);
+            return res.json({
+                data: rows
+            });
 
         }
     } catch (error: any) {
