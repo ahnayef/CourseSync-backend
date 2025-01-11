@@ -6,7 +6,6 @@ const hodGet = async (req: any, res: any) => {
         const { user } = req;
         const { id } = req.params;
 
-        console.log(id);
 
         if (user.role !== "hod") {
             return res.status(403).send("Unauthorized");
@@ -20,8 +19,6 @@ const hodGet = async (req: any, res: any) => {
         if (!result.length) {
             return res.status(404).send("No schedules found");
         }
-
-        console.log(result[0]);
 
         return res.json({
             data: result[0]

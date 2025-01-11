@@ -29,7 +29,6 @@ const createNotice = async (req: any, res: any) => {
 
         const { title, content, courseId } = value;
 
-        console.log(title, courseId);
 
         const result: any = await db.query(
             "INSERT INTO notices (title, content, session, department, course_id) VALUES (?, ?, ?, ?, ?)",
