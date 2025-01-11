@@ -1,7 +1,9 @@
 import Joi from "joi";
 import { connectToDatabase } from "../../utils/db.util";
 
+
 const schema = Joi.object({
+    id: Joi.number().required(),
     session: Joi.string().allow(null).pattern(/^(Spring|Summer|Fall) \d{2}$/).optional().messages({ 'string.pattern.base': 'Session must be in format of (Spring|Summer|Fall) YY' }),
     day: Joi.string().valid('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday').required(),
     start: Joi.string().pattern(/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/).required().messages({ 'string.pattern.base': 'Time must be in the format of HH:MM:SS' }),
@@ -12,15 +14,12 @@ const schema = Joi.object({
     department: Joi.string().valid("CSE", "BBA", "English", "LLB").required(),
 })
 
-
-const createSchedule = async (req: any, res: any) => {
-
+const updateScheule = async (req: any, res: any) => {
     try {
-
         const { user } = req;
 
         if (user.role !== "hod") {
-            return res.status(403).send("You are not authorized to create a schedule");
+            return res.status(403).send("You are not authorized to update a schedule");
         }
 
         const { error, value } = schema.validate(req.body);
@@ -31,12 +30,12 @@ const createSchedule = async (req: any, res: any) => {
 
         const db = await connectToDatabase();
 
-        const { session, day, start, end, course, instructor, room } = value;
+        const { id, session, day, start, end, course, instructor, room } = value;
 
-        const [rows]: any = await db.query("SELECT * FROM schedules WHERE day = ? AND start = ? AND end = ? AND room = ?", [day, start, end, room]);
+        const [rows]: any = await db.query("SELECT * FROM schedules WHERE id = ?", [id]);
 
-        if (rows.length) {
-            return res.status(409).send("Schedule already exists");
+        if (!rows.length) {
+            return res.status(404).send("Schedule not found");
         }
 
         const [overlapping]: any = await db.query("SELECT * FROM schedules WHERE day = ? AND room = ? AND ((start BETWEEN ? AND ?) OR (end BETWEEN ? AND ?))", [day, room, start, end, start, end]);
@@ -45,27 +44,23 @@ const createSchedule = async (req: any, res: any) => {
             return res.status(409).send("Schedule is overlapping with another schedule");
         }
 
-
         const result: any = await db.query(
-            "INSERT INTO schedules (session, day, start, end, course, instructor, room) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [session, day, start, end, course, instructor, room]
+            "UPDATE schedules SET session = ?, day = ?, start = ?, end = ?, course = ?, instructor = ?, room = ? WHERE id = ?",
+            [session, day, start, end, course, instructor, room, id]
         )
 
-        const [schedule]: any = await db.query("SELECT * FROM schedules WHERE id = ?", [result[0].insertId]);
-
-        if (!schedule.length) {
-            return res.status(500).send("Could not create schedule");
+        if (result[0].affectedRows === 0) {
+            return res.status(500).send("Could not update schedule");
         }
 
-        return res.status(201).send("Schedule Created Successfully");
+        return res.status(200).send("Schedule Updated Successfully")
+
 
 
     } catch (error: any) {
         console.log(error);
         res.status(500).send(error.message);
     }
-
 }
 
-
-export default createSchedule;
+export default updateScheule;
