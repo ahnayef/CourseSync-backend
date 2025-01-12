@@ -69,6 +69,7 @@ const Register = async (req: Request, res: any) => {
             return res.status(200).json({
                 data: {
                     token, user: {
+                        id: user[0].id,
                         name: user[0].name,
                         email: user[0].email,
                         role: user[0].role,
@@ -100,6 +101,7 @@ const Register = async (req: Request, res: any) => {
             return res.status(200).json({
                 data: {
                     token, user: {
+                        id: user[0].id,
                         name: user[0].name,
                         sid: user[0].sid,
                         role: user[0].role,

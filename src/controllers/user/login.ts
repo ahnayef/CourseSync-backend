@@ -61,6 +61,7 @@ const Login = async (req: any, res: any) => {
                 return res.status(200).json({
                     data: {
                         token, user: {
+                            id: user[0].id,
                             name: user[0].name,
                             sid: user[0].sid,
                             role: user[0].role,
@@ -99,6 +100,7 @@ const Login = async (req: any, res: any) => {
                 return res.status(200).json({
                     data: {
                         token, user: {
+                            id: user[0].id,
                             name: user[0].name,
                             sid: user[0].sid,
                             role: user[0].role,
