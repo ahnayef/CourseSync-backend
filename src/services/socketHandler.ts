@@ -1,4 +1,3 @@
-// src/socketHandler.ts
 import { Server, Socket } from 'socket.io';
 import { createAnswer, createQuestion } from '../controllers/discussion/message';
 
@@ -23,6 +22,7 @@ export const handleSocketConnection = (io: Server) => {
             } else if (session && department) {
                 room = `${session}${department}`;
             }
+            // TODO: Implement coursewise rooms later
 
             if (room) {
                 // Leave all existing rooms except the socket's own room
@@ -44,11 +44,7 @@ export const handleSocketConnection = (io: Server) => {
 
         // Handle sending a new question
         socket.on('sendQuestion', async (data) => {
-            const { content, asked_by, session, department} = data;
-
-
-            console.log(content, session, department, asked_by);
-
+            const { content, asked_by, session, department } = data;
 
             if (!session || !department) {
                 socket.emit('error', { message: 'Session and department are required to post a question.' });

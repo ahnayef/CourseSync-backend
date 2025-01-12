@@ -1,4 +1,3 @@
-// src/index.ts
 import express from 'express';
 import cors from 'cors';
 import { connectToDatabase } from './utils/db.util';
@@ -32,7 +31,7 @@ const io = new SocketIOServer(server, {
 });
 
 // Handle Socket.io connections
-handleSocketConnection(io); // All socket.io logic is handled in this file || TODO: Implement coursewise rooms
+handleSocketConnection(io); // All socket.io logic is handled in this file ||
 
 // Routes
 const startServer = async () => {
