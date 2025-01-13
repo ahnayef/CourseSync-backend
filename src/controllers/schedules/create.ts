@@ -7,7 +7,6 @@ const schema = Joi.object({
     start: Joi.string().pattern(/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/).required().messages({ 'string.pattern.base': 'Time must be in the format of HH:MM:SS' }),
     end: Joi.string().pattern(/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/).required().messages({ 'string.pattern.base': 'Time must be in the format of HH:MM:SS' }),
     course: Joi.number().required(),
-    instructor: Joi.number().required(),
     room: Joi.string().pattern(/^R-\d{3}$/).required().messages({ 'string.pattern.base': 'Room must be in the format of R-XXX' }),
     department: Joi.string().valid("CSE", "BBA", "English", "LLB").required(),
 })
@@ -31,7 +30,7 @@ const createSchedule = async (req: any, res: any) => {
 
         const db = await connectToDatabase();
 
-        const { session, day, start, end, course, instructor, room } = value;
+        const { session, day, start, end, course, room } = value;
 
         const [rows]: any = await db.query("SELECT * FROM schedules WHERE day = ? AND start = ? AND end = ? AND room = ?", [day, start, end, room]);
 
@@ -47,8 +46,8 @@ const createSchedule = async (req: any, res: any) => {
 
 
         const result: any = await db.query(
-            "INSERT INTO schedules (session, day, start, end, course, instructor, room) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [session, day, start, end, course, instructor, room]
+            "INSERT INTO schedules (session, day, start, end, course,  room) VALUES (?, ?, ?, ?, ?, ?)",
+            [session, day, start, end, course,  room]
         )
 
         const [schedule]: any = await db.query("SELECT * FROM schedules WHERE id = ?", [result[0].insertId]);
