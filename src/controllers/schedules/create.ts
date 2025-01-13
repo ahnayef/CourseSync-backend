@@ -38,7 +38,7 @@ const createSchedule = async (req: any, res: any) => {
             return res.status(409).send("Schedule already exists");
         }
 
-        const [overlapping]: any = await db.query("SELECT * FROM schedules WHERE day = ? AND room = ? AND ((TIME(start) BETWEEN TIME(?) AND TIME(?)) OR (TIME(end) BETWEEN TIME(?) AND TIME(?)))", [day, room, start, end, start, end]);
+        const [overlapping]: any = await db.query("SELECT * FROM schedules WHERE day = ? AND room = ? AND ((TIME(?) BETWEEN TIME(start) AND TIME(end)) OR (TIME(?) BETWEEN TIME(start) AND TIME(end)))", [day, room, start, end]);
 
         if (overlapping.length) {
             return res.status(409).send("Schedule is overlapping with another schedule");
