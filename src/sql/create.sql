@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS answers (
 );
 INSERT INTO users(name, email, password, department, role)
 VALUES(
-        'Dept Head',
+        'Dept. Head',
         'cse-hod@neub.edu.bd',
         '$2b$10$alY3bw9vbMoucKv4vuPmvOevHHSUOtYgZ3hEahPwxQjHNsOPcfTUW',
         'CSE',
