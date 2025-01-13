@@ -19,7 +19,7 @@ const hodGet = async (req: any, res: any) => {
             return res.status(404).send("User not found");
         }
 
-        const [rows]: any = await db.query("SELECT id, name, sid, role session FROM users WHERE department = ? AND (role = 'student' OR role = 'cr')", [dbUser[0].department]);
+        const [rows]: any = await db.query("SELECT id, name, sid, role FROM users WHERE department = ? AND (role = 'student' OR role = 'cr')", [dbUser[0].department]);
 
 
         if (!rows.length) {
