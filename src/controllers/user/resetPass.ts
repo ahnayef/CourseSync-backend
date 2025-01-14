@@ -18,7 +18,8 @@ const resetPass = async (req: any, res: any) => {
 
 
     } catch (error: any) {
-        return res.status(500).send(error.message);
+        console.log(error);
+        res.status(500).send(error.message);
     }
 
 }

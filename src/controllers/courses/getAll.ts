@@ -20,8 +20,9 @@ const getAll = async (req: any, res: any) => {
         });
 
 
-    } catch (error: any) {
-        return res.status(500).send(error.message);
+    }catch (error: any) {
+        console.log(error);
+        res.status(500).send(error.message);
     }
 }
 
