@@ -24,7 +24,8 @@ const deleteNotice = async (req: any, res: any) => {
         return res.status(200).send("Notice Deleted Successfully");
 
     } catch (error: any) {
-        return res.status(500).send(error.message);
+        console.log(error);
+        res.status(500).send(error.message);
     }
 }
 

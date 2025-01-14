@@ -29,8 +29,9 @@ const removeStudent = async (req: any, res: any) => {
         return res.status(200).send("Student removed from course");
 
 
-    } catch (error: any) {
-        res.status(400).send(error.message);
+    }catch (error: any) {
+        console.log(error);
+        res.status(500).send(error.message);
     }
 }
 

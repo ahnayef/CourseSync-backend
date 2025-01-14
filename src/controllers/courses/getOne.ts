@@ -15,6 +15,7 @@ const getOne = async (req: any, res: any) => {
             data: rows[0]
         });
     } catch (error: any) {
+        console.log(error);
         res.status(500).send(error.message);
     }
 
