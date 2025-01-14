@@ -30,7 +30,6 @@ const createCourse = async (req: any, res: any) => {
         }
 
         const { name, code, credit, department, instructor } = value;
-        console.log(value);
 
         const [rows]: any = await db.query("SELECT * FROM courses WHERE code = ?", [code]);
 

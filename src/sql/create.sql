@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS questions (
     content TEXT NOT NULL,
     asked_by INT,
     course_id INT,
-    department ENUM('CSE', 'BBA', 'English', 'LLB') NOT NULL,
-    session VARCHAR(10) NOT NULL,
+    department ENUM('CSE', 'BBA', 'English', 'LLB'),
+    session VARCHAR(10),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (asked_by) REFERENCES users(id) ON DELETE
     SET NULL ON UPDATE CASCADE,

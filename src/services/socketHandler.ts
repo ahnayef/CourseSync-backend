@@ -6,6 +6,7 @@ interface JoinRoomParams {
     session?: string;
     department?: string;
     question_id?: number;
+    course_id?: number;
 }
 
 export const handleSocketConnection = (io: Server) => {
@@ -14,13 +15,15 @@ export const handleSocketConnection = (io: Server) => {
 
         // Handle joining a room
         socket.on('joinRoom', async (params: JoinRoomParams) => {
-            const { session, department, question_id } = params;
+            const { session, department, question_id, course_id } = params;
             let room: string | null = null;
 
             if (question_id) {
                 room = `q_${question_id}`;
             } else if (session && department) {
                 room = `${session}${department}`;
+            } else if (course_id) {
+                room = `c_${course_id}`;
             }
             // TODO: Implement coursewise rooms later
 
@@ -44,23 +47,30 @@ export const handleSocketConnection = (io: Server) => {
 
         // Handle sending a new question
         socket.on('sendQuestion', async (data) => {
-            const { content, asked_by, session, department } = data;
-
-            if (!session || !department) {
-                socket.emit('error', { message: 'Session and department are required to post a question.' });
-                return;
-            }
+            const { content, asked_by, session, department, course_id } = data;
 
             try {
-                const newQuestion = await createQuestion({
-                    content,
-                    asked_by,
-                    session,
-                    department,
-                });
-                // Emit the new question to the session-department room
-                const room = `${session}${department}`;
-                io.to(room).emit('newQuestion', newQuestion);
+                if (session && department) {
+                    const newQuestion = await createQuestion({
+                        content,
+                        asked_by,
+                        session,
+                        department,
+                    });
+                    // Emit the new question to the session-department room
+                    const room = `${session}${department}`;
+                    io.to(room).emit('newQuestion', newQuestion);
+                } else if (course_id) {
+                    const newQuestion = await createQuestion({
+                        content,
+                        asked_by,
+                        course_id,
+                    });
+                    // Emit the new question to the course room
+                    const room = `c_${course_id}`;
+                    io.to(room).emit('newQuestion', newQuestion);
+                }
+
             } catch (error) {
                 console.error('Error sending question:', error);
                 socket.emit('error', { message: 'Failed to send question.' });
@@ -80,7 +90,6 @@ export const handleSocketConnection = (io: Server) => {
 
                 // Emit the new answer to the specific question room
                 const room = `q_${question_id}`;
-                console.log('Emitting to room:', room, newAnswer);
                 io.to(room).emit('newAnswer', newAnswer);
             } catch (error) {
                 console.error('Error sending answer:', error);
