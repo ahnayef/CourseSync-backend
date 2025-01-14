@@ -25,6 +25,7 @@ const get = async (req: any, res: any) => {
 
 
     } catch (error: any) {
+        console.log(error);
         return res.status(500).send(error.message);
     }
 }

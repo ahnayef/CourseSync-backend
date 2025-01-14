@@ -16,8 +16,8 @@ export const getAnswers = async (req: any, res: any) => {
         res.json({
             data: rows,
         });
-    } catch (error) {
-        console.error('Error fetching answers:', error);
-        res.status(500).json({ message: 'Server error.' });
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).send(error.message);
     }
 };
