@@ -55,10 +55,6 @@ const addHOD = async (req: any, res: any) => {
             ['hod', name, email, hashedPassword, department]
         );
 
-        if (!result.affectedRows) {
-            return res.status(500).send("Failed to add HOD");
-        }
-
         return res.status(200).send("HOD added successfully");
 
     } catch (error: any) {
