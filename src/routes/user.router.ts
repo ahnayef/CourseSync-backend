@@ -8,6 +8,10 @@ import updateRole from "../controllers/user/updateRole";
 import toggleBan from "../controllers/user/toggleBan";
 import resetPass from "../controllers/user/resetPass";
 import getTeachers from "../controllers/user/getTeachers";
+import getAllHODs from "../controllers/user/getAllHODs";
+import addHOD from "../controllers/user/addHOD";
+import updateHOD from "../controllers/user/updateHOD";
+import deleteUser from "../controllers/user/delete";
 
 const UsersRouter = Router();
 
@@ -27,6 +31,14 @@ UsersRouter.put('/toggleBan/', authMiddleware, toggleBan)
 
 UsersRouter.get('/resetPass/:id', authMiddleware, resetPass)
 
-UsersRouter.get('/getTeachers/', authMiddleware, getTeachers)
+UsersRouter.get('/getTeachers', authMiddleware, getTeachers)
+
+UsersRouter.get('/getAllHODs', authMiddleware, getAllHODs)
+
+UsersRouter.post('/addHOD', authMiddleware, addHOD)
+
+UsersRouter.put('/updateHOD', authMiddleware, updateHOD)
+
+UsersRouter.delete('/delete/:id', authMiddleware, deleteUser)
 
 export { UsersRouter };
